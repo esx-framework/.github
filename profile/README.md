@@ -1,7 +1,7 @@
 <h1 align="center">Hi 👋, We`re ESX-Framework</h1>
 <h3 align="center">The Industry Leading Framework for FiveM!</h3>
 
-<p align="center"><img src="https://img.shields.io/badge/Current%20Servers%20Count%3A-10417%20-blue?style=for-the-badge&logo=Serverless" /></p>
+<p align="center"><img src="https://docs.esx-framework.org/servercount.svg" /></p>
 <p align="center">
 🔭 We`re currently working on: <a href=https://github.com/esx-framework/esx-legacy>ESX Legacy</a>
 </p>
