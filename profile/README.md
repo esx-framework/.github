@@ -1,7 +1,7 @@
 <h1 align="center">Hi 👋, We`re ESX-Framework</h1>
 <h3 align="center">The Industry Leading Framework for FiveM!</h3>
 
-<p align="center"><img src="https://docs.esx-framework.org/severcount.svg"/></p>
+<p align="center"><img src="https://docs.esx-framework.org/servercount.svg"/></p>
 <p align="center">
 🔭 We`re currently working on: <a href=https://github.com/esx-framework/esx-legacy>ESX Legacy</a>
 </p>
