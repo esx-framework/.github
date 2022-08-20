@@ -3,7 +3,7 @@
 
 # 👋 Welcome to the official ESX page
 
-Open source framework for FiveM to allow anyone to build their own custom servers with ease.
+The Best open source framework for FiveM to allow anyone to build their own custom servers with ease.
 
 **Our biggest project?** ESX Legacy. 
 It's the Best-In-Class, most performant and user friendly version of ESX ! It offers the Best and most advanced methods in FiveM, while delivering unbeatable performance!
