@@ -21,6 +21,8 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
+          token: ${{ secrets.ESX }}
+          
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
