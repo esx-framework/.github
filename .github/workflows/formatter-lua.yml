@@ -97,6 +97,6 @@ jobs:
           commit_user_name: ESX GITHUB ACTIONS BOT
           commit_user_email: esx-github-actions-bot@users.noreply.github.com
           commit_message: ${{ steps.commit-message-step.outputs.commit_message }}
-          file_pattern: '*.lua'
+          file_pattern: '**/*.lua'
           status_options: '--untracked-files=no'
           skip_fetch: false
