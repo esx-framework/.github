@@ -1,0 +1,99 @@
+name: Code formatter lua with stylua
+
+on:
+  workflow_call:
+    inputs:
+      all-changed-files-list:
+        required: true
+        type: string
+      any-changed-files-list:
+        required: true
+        type: string
+jobs:
+  formatter-lua:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          
+      - name: Download and save the script
+        if: ${{ inputs.any-changed-files-list == 'true' }}
+        run: curl -f -o script.js https://raw.githubusercontent.com/esx-framework/.github/main/.github/actions/replacer-for-formatter.js
+
+      - name: Install replacer-lib
+        if: ${{ inputs.any-changed-files-list == 'true' }}
+        run: npm install replace-in-file
+
+      - name: Run replace script
+        if: ${{ inputs.any-changed-files-list == 'true' }}
+        run: node script.js do
+        
+      - name: Install stylua and check format
+        id: check-lua-code-format
+        if: ${{ inputs.any-changed-files-list == 'true' }}
+        uses: JohnnyMorganz/stylua-action@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: v0.19.1
+          args: --check ${{ inputs.all-changed-files-list }}
+        continue-on-error: true
+
+      - name: Run formatter
+        if: ${{ inputs.any-changed-files-list == 'true' && steps.check-lua-code-format.outcome == 'failure' }}
+        uses: JohnnyMorganz/stylua-action@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: v0.19.1
+          args: -- ${{ inputs.all-changed-files-list }}
+
+      - name: Run undo script
+        if: ${{ inputs.any-changed-files-list == 'true' }}
+        run: node script.js undo
+
+      - name: Create or Update .gitignore
+        if: ${{ inputs.any-changed-files-list == 'true' && steps.check-lua-code-format.outcome == 'failure' }}
+        run: |
+          echo "node_modules/" >> .gitignore
+          echo "package.json" >> .gitignore
+          echo "package-lock.json" >> .gitignore   
+
+      - name: Generate formatted files list
+        id: generate-formatted-list
+        if: ${{ inputs.any-changed-files-list == 'true' && steps.check-lua-code-format.outcome == 'failure' }}
+        run: |
+          echo -e ":art: Lua code formatted\n$(
+            echo "${{ inputs.all-changed-files-list }}" | tr ' ' '\n' | sed 's/^/Formatted file:  /'
+          )" > commitmessage.txt
+
+      - name: Set commit message
+        if: ${{ inputs.any-changed-files-list == 'true' && steps.check-lua-code-format.outcome == 'failure' }}
+        id: commit-message-step
+        run: |
+          echo 'commit_message<<EOF' >> $GITHUB_OUTPUT
+          cat commitmessage.txt >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+      
+      - name: Update repo before push
+        if: ${{ inputs.any-changed-files-list == 'true' && steps.check-lua-code-format.outcome == 'failure' }}
+        run: |
+          git pull
+          
+      - name: Commit changes and push current branch
+        if: ${{ inputs.any-changed-files-list == 'true' && steps.check-lua-code-format.outcome == 'failure' }}
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_user_name: ESX GITHUB ACTIONS BOT
+          commit_user_email: esx-github-actions-bot@users.noreply.github.com
+          commit_message: ${{ steps.commit-message-step.outputs.commit_message }}
+          file_pattern: '*.lua'
+          status_options: '--untracked-files=no'
+          skip_fetch: false
