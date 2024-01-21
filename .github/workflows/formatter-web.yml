@@ -50,13 +50,13 @@ jobs:
         id: check-prettier-format
         if: ${{ inputs.any-changed-files-list == 'true' }}
         run: | 
-            npx prettier --config .prettierrc --check ${{ inputs.all-changed-files-list }}
+            npx prettier --config .prettierrc.json --check ${{ inputs.all-changed-files-list }}
         continue-on-error: true
             
       - name: Format changed files with Prettier
         if: ${{ inputs.any-changed-files-list == 'true' && steps.check-prettier-format.outcome == 'failure' }}
         run: | 
-            npx prettier --config .prettierrc --write ${{ inputs.all-changed-files-list }}
+            npx prettier --config .prettierrc.json --write ${{ inputs.all-changed-files-list }}
 
       - name: Generate formatted files list
         id: generate-formatted-list
