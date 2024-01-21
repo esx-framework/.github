@@ -40,7 +40,7 @@ jobs:
         run: node script.js do
 
       - name: Download centralized .prettierrc
-        run: curl -s -O https://raw.githubusercontent.com/esx-framework/.github/main/.github/actions/.editorconfig
+        run: curl -s -O https://raw.githubusercontent.com/esx-framework/.github/main/.github/actions/stylua.toml
         
       - name: Install stylua and check format
         id: check-lua-code-format
@@ -49,7 +49,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           version: v0.19.1
-          args: --config-path .editorconfig --check ${{ inputs.all-changed-files-list }}
+          args: --config-path stylua.toml --check ${{ inputs.all-changed-files-list }}
         continue-on-error: true
 
       - name: Run formatter
@@ -58,7 +58,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           version: v0.19.1
-          args: --config-path .editorconfig -- ${{ inputs.all-changed-files-list }}
+          args: --config-path stylua.toml -- ${{ inputs.all-changed-files-list }}
 
       - name: Run undo script
         if: ${{ inputs.any-changed-files-list == 'true' }}
