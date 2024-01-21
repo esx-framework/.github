@@ -1,0 +1,4 @@
+- name: 'run-format'
+  color: '#0E8A16'
+  description: 'This is label call formatter in current repository'
+  aliases: []
