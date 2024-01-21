@@ -39,7 +39,7 @@ jobs:
         if: ${{ inputs.any-changed-files-list == 'true' }}
         run: node script.js do
 
-      - name: Download centralized .prettierrc
+      - name: Download centralized style config file
         run: curl -s -O https://raw.githubusercontent.com/esx-framework/.github/main/.github/actions/stylua.toml
         
       - name: Install stylua and check format
