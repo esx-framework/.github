@@ -43,17 +43,20 @@ jobs:
         run: | 
             npm install --save-dev prettier
 
+      - name: Download centralized style config file
+        run: curl -s -O https://raw.githubusercontent.com/esx-framework/.github/main/.github/actions/.prettierrc.json
+
       - name: Check prettier code format
         id: check-prettier-format
         if: ${{ inputs.any-changed-files-list == 'true' }}
         run: | 
-            npx prettier --check ${{ inputs.all-changed-files-list }}
+            npx prettier --config .prettierrc --check ${{ inputs.all-changed-files-list }}
         continue-on-error: true
             
       - name: Format changed files with Prettier
         if: ${{ inputs.any-changed-files-list == 'true' && steps.check-prettier-format.outcome == 'failure' }}
         run: | 
-            npx prettier --write ${{ inputs.all-changed-files-list }}
+            npx prettier --config .prettierrc --write ${{ inputs.all-changed-files-list }}
 
       - name: Generate formatted files list
         id: generate-formatted-list
