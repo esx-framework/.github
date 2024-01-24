@@ -23,7 +23,9 @@ jobs:
   create-release:
     name: Build and Create Tagged release
     runs-on: ubuntu-latest
-
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
     steps:
       - name: Convert 'web' input to boolean and set as env var
         run: |
