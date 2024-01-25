@@ -109,7 +109,9 @@ jobs:
           fi
           
       - name: 'Download Bump manifest version js file and run in node'
-        run: curl -f https://raw.githubusercontent.com/esx-framework/.github/main/.github/actions/bump-manifest-version.js | node -
+        run: | 
+          curl -f https://raw.githubusercontent.com/esx-framework/.github/main/.github/actions/bump-manifest-version.js | node - > set_env.sh
+          bash set_env.sh
         env:
           TGT_RELEASE_VERSION: ${{ env.DETERMINED_VERSION }}
       - name: Push manifest change
@@ -125,7 +127,7 @@ jobs:
       - name: Update tag ref
         uses: EndBug/latest-tag@latest
         with:
-          tag-name: ${{ env.DETERMINED_VERSION }}
+          ref: ${{ env.DETERMINED_VERSION }}
 
       - name: Create exclude file from input
         run: |
