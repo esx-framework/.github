@@ -107,6 +107,9 @@ jobs:
           else
             echo "NEW_BRANCH_NEEDED=" >> $GITHUB_ENV
           fi
+
+      - name: Install replacer lib
+        run: npm i replace-in-file
           
       - name: 'Download Bump manifest version js file and run in node'
         run: | 
