@@ -23,6 +23,10 @@ on:
           type: string
           description: Specify true or false if you want to create a new branch.
           required: false
+        fxmanifestPath:
+          type: string
+          description: Specify fxmanifest path if fxmanifest is not in the root folder.
+          required: false
 jobs:
   create-release:
     name: Build and Create Tagged release
@@ -121,7 +125,7 @@ jobs:
       - name: Push manifest change
         uses: EndBug/add-and-commit@v8
         with:
-          add: '**/fxmanifest.lua'
+          add: ${{ inputs.fxmanifestPath || '**/fxmanifest.lua' }}
           push: true
           author_name: Manifest Bumper
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
