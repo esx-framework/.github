@@ -113,7 +113,7 @@ jobs:
           fi
 
       - name: Install replacer lib
-        run: npm i replace-in-file
+        run: npm i replace-in-file@7.2.0
         
       - name: 'Download Bump manifest version js file and run in node'
         id: replace_script
