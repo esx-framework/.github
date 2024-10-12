@@ -1,0 +1,166 @@
+name: Simple Release Web GitHub Actions
+
+on:
+  workflow_call:
+    inputs:
+        excludeOptions:
+          type: string
+          description: Separate the files or folders that you do not want to see in the release with a comma. 
+          required: false
+        zipName:
+          type: string
+          description: Given release zip name
+          required: true
+        web:
+          type: string
+          description: If the value is true then it builds web files, if not then it is a simple release.
+          required: false
+        versionNumber:
+          type: string
+          description: If the value is true then it builds web files, if not then it is a simple release.
+          required: false
+        neededNewBranch:
+          type: string
+          description: Specify true or false if you want to create a new branch.
+          required: false
+        fxmanifestPath:
+          type: string
+          description: Specify fxmanifest path if fxmanifest is not in the root folder.
+          required: false
+jobs:
+  create-release:
+    name: Build and Create Tagged release
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.ESX_TOKEN || secrets.GITHUB_TOKEN }}
+      
+    steps:
+      - name: Convert 'web' input to boolean and set as env var
+        run: |
+          if [ "${{ inputs.web }}" = "true" ]; then
+            echo "WEB=true" >> $GITHUB_ENV
+          else
+            echo "WEB=" >> $GITHUB_ENV
+          fi
+      - name: Install archive tools
+        run: sudo apt install zip
+
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.ESX_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Setup node with dependency path
+        if: ${{ env.WEB }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: web/package-lock.json
+          
+      - name: Install dependencies
+        if: ${{ env.WEB }}
+        run: npm i
+        working-directory: web
+
+      - name: Run build
+        if: ${{ env.WEB }}
+        run: npm run build
+        working-directory: web
+        env:
+          CI: false
+          
+      - name: Get Previous tag
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: 1.0.0
+
+      - name: Get next minor version
+        id: semvers
+        uses: "WyriHaximus/github-action-next-semvers@v1"
+        with:
+          version: ${{ steps.previoustag.outputs.tag }}
+          
+      - name: Create new milestone
+        id: createmilestone
+        uses: "WyriHaximus/github-action-create-milestone@v1"
+        with:
+          title: ${{ steps.semvers.outputs.patch }}
+          
+      - name: Set Release Version
+        id: set_version
+        run: |
+          if [ "${{ inputs.versionNumber }}" != "" ]; then
+            echo "DETERMINED_VERSION=${{ inputs.versionNumber }}" >> $GITHUB_ENV
+          else
+            echo "DETERMINED_VERSION=${{ steps.semvers.outputs.patch }}" >> $GITHUB_ENV
+          fi
+          
+      - name: Set needed new branch
+        run: |
+          if [ "${{ inputs.neededNewBranch }}" = "true" ]; then
+            echo "NEW_BRANCH_NEEDED=new-release-${{ env.DETERMINED_VERSION }}" >> $GITHUB_ENV
+          else
+            echo "NEW_BRANCH_NEEDED=" >> $GITHUB_ENV
+          fi
+
+      - name: Install replacer lib
+        run: npm i replace-in-file@7.2.0
+        
+      - name: 'Download Bump manifest version js file and run in node'
+        id: replace_script
+        run: |
+          curl -f https://raw.githubusercontent.com/esx-framework/.github/main/.github/actions/bump-manifest-version.js | node
+        env:
+          TGT_RELEASE_VERSION: ${{ env.DETERMINED_VERSION }}
+          
+      - name: Push manifest change
+        uses: EndBug/add-and-commit@v8
+        with:
+          add: ${{ inputs.fxmanifestPath || '**/fxmanifest.lua' }}
+          push: true
+          author_name: Manifest Bumper
+          author_email: 41898282+github-actions[bot]@users.noreply.github.com
+          message: 'chore: bump manifest version to ${{ env.DETERMINED_VERSION }}'
+          new_branch: ${{ env.NEW_BRANCH_NEEDED }}
+
+      - name: Update tag ref
+        uses: EndBug/latest-tag@latest
+        with:
+          ref: ${{ env.DETERMINED_VERSION }}
+
+      - name: Create exclude file from input
+        run: |
+         IFS=',' read -ra ADDR <<< "${{ inputs.excludeOptions }}"
+          for i in "${ADDR[@]}"; do
+            echo "${i// /}" >> exclude.txt
+          done
+
+      - name: Bundle files
+        run: |
+          mkdir -p ./temp/${{ inputs.zipName }}
+          mkdir -p ./temp/${{ inputs.zipName }}/web
+          cp ./fxmanifest.lua ./temp/${{ inputs.zipName }}
+          cp -r ./{client,locales,server,stream,shared} ./temp/${{ inputs.zipName }}
+          cp -r ./web/dist ./temp/${{ inputs.zipName }}/web/dist
+          cd ./temp && zip -r ../${{ inputs.zipName }}.zip ./${{ inputs.zipName }}
+          
+      - name: Create Release
+        uses: 'marvinpinto/action-automatic-releases@v1.2.1'
+        id: auto_release
+        with:
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          automatic_release_tag: ${{ env.DETERMINED_VERSION }}
+          prerelease: false
+          files: ${{ inputs.zipName }}.zip
+        env:
+          CI: false
+          GITHUB_TOKEN: ${{ secrets.ESX_TOKEN || secrets.GITHUB_TOKEN }}
