@@ -118,7 +118,7 @@ jobs:
       - name: 'Download Bump manifest version js file and run in node'
         id: replace_script
         run: |
-          curl -f https://raw.githubusercontent.com/esx-framework/.github/main/.github/actions/bump-manifest-version.js | node
+          curl -f https://raw.githubusercontent.com/esx-framework/.github/main/.github/actions/bump-web-version.js | node
         env:
           TGT_RELEASE_VERSION: ${{ env.DETERMINED_VERSION }}
           
