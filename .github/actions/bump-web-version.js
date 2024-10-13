@@ -7,8 +7,11 @@ const newVersion = version.replace("v", "");
 
 const results = replace.sync({
     files: "fxmanifest.lua",
-    from: /\bversion\s+(.*)$/gm,
-    to: `version '${newVersion}'`,
+    from: [
+        /\bversion\((['"])(.*?)\1\)/gm,  
+        /\bversion\s+(.*)$/gm
+    ],
+    to: `version('${newVersion}')`,
 });
 
-console.log(results)
+console.log(results);
