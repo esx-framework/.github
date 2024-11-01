@@ -29,7 +29,7 @@
 <a href="https://twitter.com/esx_framework" target="_blank">
 <img src="https://img.shields.io/badge/twitter-%2300acee.svg?&style=for-the-badge&logo=twitter&logoColor=white" alt=twitter style="margin-bottom: 5px;" />
 </a>
-<a href="https://www.youtube.com/user/esxframework" target="_blank">
+<a href="https://www.youtube.com/@esxframework" target="_blank">
 <img src="https://img.shields.io/badge/youtube-%23EE4831.svg?&style=for-the-badge&logo=youtube&logoColor=white" alt=youtube style="margin-bottom: 5px;" />
 </a>
 <a href="https://linkedin.com/company/esx-framework" target="_blank">
