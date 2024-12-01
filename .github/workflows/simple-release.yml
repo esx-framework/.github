@@ -131,6 +131,7 @@ jobs:
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: 'chore: bump manifest version to ${{ env.DETERMINED_VERSION }}'
           new_branch: ${{ env.NEW_BRANCH_NEEDED }}
+          token: ${{ secrets.ESX_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Update tag ref
         uses: EndBug/latest-tag@latest
