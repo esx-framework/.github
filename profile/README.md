@@ -15,7 +15,7 @@
 - ❓Need Support? Visit our [Discord!](https://discord.esx-framework.org)  
 
   
-- ⚡ Fun fact: ESX is used in over 12,000 Servers!  
+- ⚡ Fun fact: ESX is used in over 15,000 Servers!  
 
 
 <br/>  
