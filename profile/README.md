@@ -5,7 +5,7 @@
 
 ### <div align="center">Welcome to the Home of ESX!</div>  
 #### <div align="center">A non-profit organisation dedicated to providing free and open-source software for everyone.</div>
-#### <div align="center">⚡ Fun fact: ESX is used in over 14,000 servers and enjoyed by 60,000 players daily! </div>
+#### <div align="center">⚡ Fun fact: ESX is used in 14,000+ servers and enjoyed by more than 60,000 players daily! </div>
 <br />
 
 ## Directory
