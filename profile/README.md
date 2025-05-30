@@ -3,26 +3,22 @@
 </div>  
   
 
-### <div align="center">Welcome to the Home of ESX-Framework!</div>  
-  
+### <div align="center">Welcome to the Home of ESX!</div>  
+#### <div align="center">A non-profit organisation dedicated to providing free and open-source software for everyone.</div>
+#### <div align="center">⚡ Fun fact: ESX is used in over 14,000 servers and enjoyed by 60,000 players daily! </div>
+<br />
 
-- 🔭 Current Project: [ESX Legacy](https://github.com/esx-framework/esx_core)  
+## Directory
+- 🔭 [ESX: Legacy (Core)](https://github.com/esx-framework/esx_core)
+- 🔭 [ESX: Legacy (Addons)](https://github.com/esx-framework/esx-legacy-addons)
+- 🔭 [txAdmin Recipes](https://github.com/esx-framework/esx-recipes)
+- 🔭 [Documentation Source Code](https://github.com/esx-framework/esx-documentation)
 
-  
-- 🌱 Our [Documentation](https://documentation.esx-framework.org)  
+- ❓Need Support? Visit our [Discord](https://discord.esx-framework.org) or our [Documentation](https://docs.esx-framework.org) page!
+<br/>
 
-  
-- ❓Need Support? Visit our [Discord!](https://discord.esx-framework.org)  
+## Our Socials!
 
-  
-- ⚡ Fun fact: ESX is used in over 12,000 Servers!  
-
-
-<br/>  
-
-
-## Connect with Us  
-<div align="center">
 <a href="https://github.com/esx-framework" target="_blank">
 <img src="https://img.shields.io/badge/github-%2324292e.svg?&style=for-the-badge&logo=github&logoColor=white" alt=github style="margin-bottom: 5px;" />
 </a>
@@ -37,9 +33,5 @@
 </a>
 <a href="https://discord.esx-framework.org" target="_blank">
 <img src="https://img.shields.io/discord/513374574394474531?style=for-the-badge&logo=discord&logoColor=%23fb9b04&logoSize=auto&label=Discord" alt=linkedin style="margin-bottom: 5px;" />
-</a>  
-</div>
-
-
-
+</a>
 <br />
