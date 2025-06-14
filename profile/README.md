@@ -14,7 +14,7 @@
 - 🔭 [txAdmin Recipes](https://github.com/esx-framework/esx-recipes)
 - 🔭 [Documentation Source Code](https://github.com/esx-framework/esx-documentation)
 
-- ❓Need Support? Visit our [Discord](https://discord.esx-framework.org) or our [Documentation](https://docs.esx-framework.org) page!
+- ❓Need Support? Visit our [Discord](https://discord.esx-framework.org) or our [Documentation](https://docs.esx-legacy.com/en) page!
 <br/>
 
 ## Our Socials!
