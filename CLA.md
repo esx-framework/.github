@@ -5,8 +5,8 @@ To ensure that the ESX Framework team can enforce licensing and maintain the int
 
 ## 1. Definitions
 
-- **Project**: Any ESX Framework repository under the ESX Framework GitHub organization and any directly related codebases to which this CLA applies.
-- **Contribution**: Any code, documentation, or other materials you submit or have submitted to the project.
+- **Project**: Any ESX Framework repository under the ESX Framework GitHub organization and any directly related codebase to which this CLA applies.
+- **Contribution**: Any code, documentation, or other material you submit or have submitted to the project.
 - **Organization / Enforcers**: The ESX Framework management team or any person assigned by the management team to enforce the Project's license.
 
 ## 2. Grant of License Enforcement Rights
@@ -26,14 +26,13 @@ Once you have accepted this CLA, the rights granted to the Organization under th
 
 You represent that: 
 
-1. You have the right to submit your Contribution under this CLA.
+1. You have the right to submit your Contributions under this CLA.
 2. Your Contributions do not violate the intellectual property rights of any third party.
 
 ## 5. Acceptance
 
-To accept this CLA, you must include the following statement in your pull request:
-
-> "I have read and agree to the [ESX Framework CLA](https://github.com/ESX-Framework/.github/blob/main/CLA.md)"
+To accept this CLA, you must sign it via [CLA Assistant](https://cla-assistant.io/esx-framework/esx_core). 
+Once signed, the CLA applies to all past and future Contributions automatically.
 
 By doing so, you are granting the Organization the rights described above.
 
